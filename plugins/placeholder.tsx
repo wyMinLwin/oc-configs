@@ -2,14 +2,18 @@
 import { createSignal, Show } from "solid-js"
 import type { TuiPlugin, TuiPluginModule, TuiPromptRef } from "@opencode-ai/plugin/tui"
 
-const NORMAL: Record<"morning" | "day" | "night" | "midnight", string[]> = {
+const NORMAL: Record<"morning" | "day" | "evening" | "night" | "midnight", string[]> = {
   morning: [
     "Coffee's on. What are we shipping today?",
     "Early start. What's the plan?",
   ],
   day: [
     "What's up next, L?",
-    "e4? | g6?",
+    "e4?",
+    "g6?"
+  ],
+  evening: [
+    "Still working, L? Let's get this done.",
   ],
   night: [
     "One more thing before bed?",
@@ -28,7 +32,8 @@ function band(): keyof typeof NORMAL {
   const h = new Date().getHours()
   if (h >= 5 && h < 9) return "morning"
   if (h >= 9 && h < 18) return "day"
-  if (h >= 18 && h < 23) return "night"
+  if (h >= 18 && h < 20) return "evening"
+  if (h >= 20 && h < 23) return "night"
   return "midnight"
 }
 

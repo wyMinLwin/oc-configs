@@ -1,24 +1,22 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "autoupdate": true,
-  // Main build agent model
   "model": "github-copilot/gpt-5.4",
-  "default_agent": "consult",
-  // Cheap model for titles/compaction — reuse minimax since it's already set up
-  "small_model": "openrouter/minimax/minimax-m2.7",
+  "default_agent": "plan",
+  "small_model": "opencode/minimax-m2.7",
   "agent": {
     "build": {
       "model": "github-copilot/gpt-5.4",
       "temperature": 0.1
     },
     "plan": {
-      "model": "github-copilot/claude-opus-4.7",
+      "model": "github-copilot/claude-opus-4.6",
       "temperature": 0.2
     },
     "explore": {
       "description": "Fast read-only codebase exploration. Use for grep-style queries, finding files by pattern, locating where functionality lives, and reading large portions of the codebase to understand existing implementations. Bash is enabled for rg/find/git log/blame.",
       "mode": "subagent",
-      "model": "openrouter/minimax/minimax-m2.7",
+      "model": "opencode/minimax-m2.7",
       "temperature": 0.1,
       "permission": {
         "edit": "deny",
@@ -29,8 +27,8 @@
     "librarian": {
       "description": "Research library docs, npm packages, API references, and current syntax. Use when the main agent needs to verify a library's behavior, look up current documentation, or check how a third-party package is meant to be used. Bash is enabled for version checks (npm view, package inspection).",
       "mode": "subagent",
-      "model": "github-copilot/claude-sonnet-4.5",
-      "temperature": 0.3,
+      "model": "opencode/claude-haiku-4-5",
+      "temperature": 0.1,
       "permission": {
         "edit": "deny",
         "write": "deny",
@@ -115,7 +113,6 @@
       ]
     }
   },
-  // Context7 gives librarian actual doc search over indexed library docs
   "mcp": {
     "context7": {
       "type": "remote",
